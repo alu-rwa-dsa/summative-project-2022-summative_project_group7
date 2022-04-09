@@ -1,5 +1,9 @@
 from tkinter import *
-from solver import solver
+# from solver import solver
+from sudokusolver import solver
+from puzzle import puzzle
+import sys
+import time
 
 # create the gui window
 root = Tk()
@@ -25,9 +29,16 @@ successLabel.grid(row=15, column=1, columnspan=10, pady=5)
 cells = {}
 
 
+# cells{[(2,2)] : val}
+
+
 # Function to validate our input numbers
 def validateNumber(P):
+    errorLabel.configure(text="")
+
     out = (P.isdigit() or P == "") and len(P) < 2
+    if not out:
+        errorLabel.configure(text="Invalid Input!Enter numbers from 1-9")
     return out
 
 
@@ -53,6 +64,7 @@ def draw9x9Grid():
                 color = "#ffffd0"
             else:
                 color = "#D0ffff"
+    populateGrid(puzzle)
 
 
 # Function to clear values from the grid
@@ -63,6 +75,7 @@ def clearValues():
         for col in range(1, 10):
             cell = cells[(row, col)]
             cell.delete(0, "end")
+    populateGrid(puzzle)
 
 
 # Function to get input from the user
@@ -83,7 +96,7 @@ def getValues():
 
 
 # Solve Button
-btn = Button(root, command=getValues, text="Solve", width=10)
+btn = Button(root, command=getValues, text="Show solution", width=20)
 btn.grid(row=20, column=1, columnspan=5, pady=20)
 
 # Clear Button
@@ -100,9 +113,26 @@ def updateValues(s):
                 cells[(rows, col)].delete(0, "end")
                 cells[(rows, col)].insert(0, sol[rows - 2][col - 1])
         successLabel.configure(text="Sudoku Solved")
-    else:
-        errorLabel.configure(text="No Solution exists for this sudoku")
 
+    else:
+        errorLabel.configure(text="No Solution exist for this sudoku")
+
+
+# def setDefault():
+#     # for rows in range(len(puzzle)):
+#     #     for col in range(len(puzzle)):
+#     val = puzzle[2][2]
+#     if val != 0:
+#         # cells{[(2, 2)]: val}
+#
+
+def populateGrid(puzzle):
+    for rows in range(2, 11):
+        for col in range(1, 10):
+            val = puzzle[rows-2][col-1]
+            if val != 0:
+                cells[(rows, col)].delete(0, "end")
+                cells[(rows, col)].insert(0, val)
 
 
 draw9x9Grid()
