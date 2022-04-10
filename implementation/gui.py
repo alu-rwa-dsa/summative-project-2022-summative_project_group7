@@ -118,13 +118,7 @@ def updateValues(s):
         errorLabel.configure(text="No Solution exist for this sudoku")
 
 
-# def setDefault():
-#     # for rows in range(len(puzzle)):
-#     #     for col in range(len(puzzle)):
-#     val = puzzle[2][2]
-#     if val != 0:
-#         # cells{[(2, 2)]: val}
-#
+# Function to set default puzzle values on the grid
 
 def populateGrid(puzzle):
     for rows in range(2, 11):
