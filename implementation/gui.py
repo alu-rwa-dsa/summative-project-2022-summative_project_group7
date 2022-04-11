@@ -1,9 +1,11 @@
 from tkinter import *
 # from solver import solver
 from sudokusolver import solver
-from puzzle import puzzle
+from puzzle import puzzle, solution
 import sys
 import time
+
+global board
 
 # create the gui window
 root = Tk()
@@ -92,21 +94,22 @@ def getValues():
             else:
                 rows.append(int(val))
         board.append(rows)
-    updateValues(board)
+    return board
+    # checkSolvable(board)
 
 
-# Solve Button
-btn = Button(root, command=getValues, text="Show solution", width=20)
-btn.grid(row=20, column=1, columnspan=5, pady=20)
-
-# Clear Button
-btn = Button(root, command=clearValues, text="Clear", width=10)
-btn.grid(row=20, column=5, columnspan=5, pady=20)
+def compareSolution():
+    board = getValues()
+    if board == solution:
+        successLabel.configure(text="Correct Solution. Congratulations!")
+    else:
+        errorLabel.configure(text="Wrong Solution. Try again.")
 
 
 # Function to update the cells and display the sudoku solution
-def updateValues(s):
-    sol = solver(s)
+def checkSolvable():
+    board = getValues()
+    sol = solver(board)
     if sol != "no":
         for rows in range(2, 11):
             for col in range(1, 10):
@@ -118,12 +121,25 @@ def updateValues(s):
         errorLabel.configure(text="No Solution exist for this sudoku")
 
 
+# Solution Button
+btn = Button(root, command=compareSolution, text="Submit", width=20)
+btn.grid(row=21, column=1, columnspan=5, pady=20)
+
+# Solve Button
+btn = Button(root, command=checkSolvable, text="Show solution", width=20)
+btn.grid(row=20, column=1, columnspan=5, pady=20)
+
+# Clear Button
+btn = Button(root, command=clearValues, text="Clear", width=10)
+btn.grid(row=20, column=5, columnspan=5, pady=20)
+
+
 # Function to set default puzzle values on the grid
 
 def populateGrid(puzzle):
     for rows in range(2, 11):
         for col in range(1, 10):
-            val = puzzle[rows-2][col-1]
+            val = puzzle[rows - 2][col - 1]
             if val != 0:
                 cells[(rows, col)].delete(0, "end")
                 cells[(rows, col)].insert(0, val)
