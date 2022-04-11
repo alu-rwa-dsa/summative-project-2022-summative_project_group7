@@ -5,6 +5,7 @@ from puzzle import puzzle, solution
 import sys
 import time
 
+
 global board
 
 # create the gui window
@@ -102,8 +103,10 @@ def compareSolution():
     board = getValues()
     if board == solution:
         successLabel.configure(text="Correct Solution. Congratulations!")
+        return True
     else:
         errorLabel.configure(text="Wrong Solution. Try again.")
+        return False
 
 
 # Function to update the cells and display the sudoku solution
@@ -121,6 +124,17 @@ def checkSolvable():
         errorLabel.configure(text="No Solution exist for this sudoku")
 
 
+# Function to set default puzzle values on the grid
+
+def populateGrid(puzzle):
+    for rows in range(2, 11):
+        for col in range(1, 10):
+            val = puzzle[rows - 2][col - 1]
+            if val != 0:
+                cells[(rows, col)].delete(0, "end")
+                cells[(rows, col)].insert(0, val)
+
+
 # Solution Button
 btn = Button(root, command=compareSolution, text="Submit", width=20)
 btn.grid(row=21, column=1, columnspan=5, pady=20)
@@ -132,18 +146,6 @@ btn.grid(row=20, column=1, columnspan=5, pady=20)
 # Clear Button
 btn = Button(root, command=clearValues, text="Clear", width=10)
 btn.grid(row=20, column=5, columnspan=5, pady=20)
-
-
-# Function to set default puzzle values on the grid
-
-def populateGrid(puzzle):
-    for rows in range(2, 11):
-        for col in range(1, 10):
-            val = puzzle[rows - 2][col - 1]
-            if val != 0:
-                cells[(rows, col)].delete(0, "end")
-                cells[(rows, col)].insert(0, val)
-
 
 draw9x9Grid()
 root.mainloop()
