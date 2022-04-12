@@ -1,10 +1,8 @@
+import tkinter
 from tkinter import *
-# from solver import solver
 from sudokusolver import solver
 from puzzle import puzzle, solution
-import sys
 import time
-
 
 global board
 
@@ -13,7 +11,7 @@ root = Tk()
 root.title("Sudoku Solver")
 
 # Set dimensions of the window
-root.geometry("324x550")
+root.geometry("370x550")
 
 label = Label(root, text="Fill in the numbers and click solve").grid(row=0, column=1, columnspan=10)
 
@@ -32,16 +30,13 @@ successLabel.grid(row=15, column=1, columnspan=10, pady=5)
 cells = {}
 
 
-# cells{[(2,2)] : val}
-
-
 # Function to validate our input numbers
 def validateNumber(P):
     errorLabel.configure(text="")
-
-    out = (P.isdigit() or P == "") and len(P) < 2
+    out = (P.isdigit() or P == "") and len(P) < 2 and P != "0"
     if not out:
         errorLabel.configure(text="Invalid Input!Enter numbers from 1-9")
+        return False
     return out
 
 
@@ -49,26 +44,34 @@ reg = root.register(validateNumber)
 
 
 # Draw the 3 by 3 regions
+
 def draw3x3Grid(row, column, bgcolor):
     for i in range(3):
         for j in range(3):
-            e = Entry(root, width=5, bg=bgcolor, justify="center", validate="key", validatecommand=(reg, "%P"))
+            e = Entry(root, width=5,fg="purple",font=('Lato 10'),  bg=bgcolor, justify="center", validate="key", validatecommand=(reg, "%P"))
             e.grid(row=row + i + 1, column=column + j + 1, sticky="nsew", padx=1, pady=1, ipady=5)
             cells[(row + i + 1, column + j + 1)] = e
 
 
 # Draw the 9 by 9 Grid
 def draw9x9Grid():
-    color = "#D0ffff"
+    # color = "#D0ffff"
+    color = "#48bfe3"
+    color = "#caf0f8"
+    color = "white"
     for rowNo in range(1, 10, 3):
         for colNo in range(0, 9, 3):
             draw3x3Grid(rowNo, colNo, color)
-            if color == "#D0ffff":
-                color = "#ffffd0"
-            else:
-                color = "#D0ffff"
-    populateGrid(puzzle)
+            # if color == "#D0ffff":
+            if color == "#caf0f8":
 
+                color = "#ffffd0"
+                color = "#cdb4db"
+                color = "white"
+            else:
+                # color = "#D0ffff"
+                color = "#caf0f8"
+    populateGrid(puzzle)
 
 # Function to clear values from the grid
 def clearValues():
@@ -96,7 +99,6 @@ def getValues():
                 rows.append(int(val))
         board.append(rows)
     return board
-    # checkSolvable(board)
 
 
 def compareSolution():
@@ -132,9 +134,12 @@ def populateGrid(puzzle):
             val = puzzle[rows - 2][col - 1]
             if val != 0:
                 cells[(rows, col)].delete(0, "end")
+                cells[(rows, col)].config(fg="#023e8a")
                 cells[(rows, col)].insert(0, val)
+                # print(val, end="")
 
 
+#
 # Solution Button
 btn = Button(root, command=compareSolution, text="Submit", width=20)
 btn.grid(row=21, column=1, columnspan=5, pady=20)
@@ -148,4 +153,6 @@ btn = Button(root, command=clearValues, text="Clear", width=10)
 btn.grid(row=20, column=5, columnspan=5, pady=20)
 
 draw9x9Grid()
-root.mainloop()
+
+if __name__ == '__main__':
+    root.mainloop()

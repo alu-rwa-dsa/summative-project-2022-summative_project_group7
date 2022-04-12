@@ -71,21 +71,3 @@ def solver(puzzle):
         return puzzle
     else:
         return "no"
-#
-# puzzle = [
-#     [5, 3, 0, 0, 7, 0, 0, 0, 0],
-#     [6, 0, 0, 1, 9, 5, 0, 0, 0],
-#     [0, 9, 8, 0, 0, 0, 0, 6, 0],
-#     [8, 0, 0, 0, 6, 0, 0, 0, 3],
-#     [4, 0, 0, 8, 0, 3, 0, 0, 1],
-#     [7, 0, 0, 0, 2, 0, 0, 0, 6],
-#     [0, 6, 0, 0, 0, 0, 2, 8, 0],
-#     [0, 0, 0, 4, 1, 9, 0, 0, 5],
-#     [0, 0, 0, 0, 8, 0, 0, 7, 9]
-# ]
-
-# start_time = timeit.default_timer()
-# print(solve_puzzle(puzzle))
-# end_time = timeit.default_timer()
-# print_puzzle(puzzle)
-# print(f"Time taken to solve the puzzle is: {end_time - start_time} seconds")
