@@ -1,8 +1,3 @@
-import timeit
-
-
-count = 0
-
 
 # Function to solve a given sudoku puzzle.
 def solve_puzzle(puzzle):
