@@ -3,7 +3,7 @@ from tkinter import *
 from sudokusolver import solver
 from puzzle import puzzle, solution
 import time
-# import mp3play
+from tkinter import messagebox
 import pygame
 
 global board
@@ -60,7 +60,6 @@ def draw9x9Grid():
     for rowNo in range(1, 10, 3):
         for colNo in range(0, 9, 3):
             draw3x3Grid(rowNo, colNo, color, color)
-            # if color == "#D0ffff":
             if color == "#caf0f8":
                 color = "white"
             else:
@@ -72,6 +71,9 @@ def draw9x9Grid():
 def clearValues():
     errorLabel.configure(text="")
     successLabel.configure(text="")
+    if submitBtn['text'] == 'Play Again':
+        changeSubmitButtonText()
+        changeSolveButtonState()
     for row in range(2, 11):
         for col in range(1, 10):
             cell = cells[(row, col)]
@@ -97,9 +99,13 @@ def getValues():
 
 
 def compareSolution():
+    changeSolveButtonState()
+    changeSubmitButtonText()
     board = getValues()
     if board == solution:
-        successLabel.configure(text="Correct Solution. Congratulations!")
+        # successLabel.configure(text="Correct Solution. Congratulations!")
+        messagebox.showinfo("Sudoku Results", "Correct Solution. Congratulations!")
+
         return True
     else:
         errorLabel.configure(text="Wrong Solution. Try again.")
@@ -115,6 +121,7 @@ def checkSolvable():
             for col in range(1, 10):
                 cells[(rows, col)].delete(0, "end")
                 cells[(rows, col)].insert(0, sol[rows - 2][col - 1])
+
         successLabel.configure(text="Sudoku Solved")
 
     else:
@@ -143,32 +150,55 @@ def play():
     pygame.mixer.music.play(loops=0)
 
 
-# Function to end the theme music.
+# Function to end the theme music by Hans Zimmer
 def stop():
     pygame.mixer.music.stop()
+
+
+def changeSolveButtonState():
+    if solveBtn['state'] == DISABLED:
+
+        solveBtn['state'] = NORMAL
+
+    else:
+
+        solveBtn['state'] = DISABLED
+
+
+def changeSubmitButtonText():
+    if submitBtn['text'] == 'Submit':
+        submitBtn['text'] = 'Play Again'
+        submitBtn['command'] = clearValues
+        clearBtn['state'] = DISABLED
+
+    else:
+        submitBtn['text'] = 'Submit'
+        submitBtn['command'] = compareSolution
+        clearBtn['state'] = NORMAL
+
 
 
 # GUI Buttons
 
 # Solution Button
-btn = Button(root, command=compareSolution, text="Submit", width=10)
-btn.grid(row=20, column=1, columnspan=5, pady=20)
+submitBtn = Button(root, command=compareSolution, text="Submit", width=10)
+submitBtn.grid(row=20, column=1, columnspan=5, pady=20)
 
 # Clear Button
-btn = Button(root, command=clearValues, text="Clear", width=10)
-btn.grid(row=20, column=5, columnspan=5, pady=20)
+clearBtn = Button(root, command=clearValues, text="Clear", width=10, state=NORMAL)
+clearBtn.grid(row=20, column=5, columnspan=5, pady=20)
 
 # Play Music
-btn = Button(root, command=play, text="Play Music", width=10)
-btn.grid(row=21, column=1, columnspan=5, pady=20)
+playBtn = Button(root, command=play, text="Play Music", width=10)
+playBtn.grid(row=21, column=1, columnspan=5, pady=20)
 
 # Stop Music
-btn = Button(root, command=stop, text="Stop Music", width=10)
-btn.grid(row=21, column=5, columnspan=5, pady=20)
+StopBtn = Button(root, command=stop, text="Stop Music", width=10)
+StopBtn.grid(row=21, column=5, columnspan=5, pady=20)
 
 # Solve Button
-btn = Button(root, command=checkSolvable, text="Show solution", width=10)
-btn.grid(row=22, column=3, columnspan=5, pady=20)
+solveBtn = Button(root, command=checkSolvable, text="Show solution", width=10, state=DISABLED)
+solveBtn.grid(row=22, column=3, columnspan=5, pady=20)
 
 draw9x9Grid()
 
