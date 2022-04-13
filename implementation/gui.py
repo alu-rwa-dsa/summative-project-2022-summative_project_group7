@@ -3,9 +3,10 @@ from tkinter import *
 from sudokusolver import solver
 from puzzle import puzzle, solution
 import time
+# import mp3play
+import pygame
 
 global board
-
 # create the gui window
 root = Tk()
 root.title("Sudoku Solver")
@@ -44,34 +45,28 @@ reg = root.register(validateNumber)
 
 
 # Draw the 3 by 3 regions
-
-def draw3x3Grid(row, column, bgcolor):
+def draw3x3Grid(row, column, bgcolor, readonlycolor):
     for i in range(3):
         for j in range(3):
-            e = Entry(root, width=5,fg="purple",font=('Lato 10'),  bg=bgcolor, justify="center", validate="key", validatecommand=(reg, "%P"))
+            e = Entry(root, width=5, fg="purple", font=('Lato 10'), bg=bgcolor, readonlybackground=readonlycolor,
+                      justify="center", validate="key", validatecommand=(reg, "%P"))
             e.grid(row=row + i + 1, column=column + j + 1, sticky="nsew", padx=1, pady=1, ipady=5)
             cells[(row + i + 1, column + j + 1)] = e
 
 
 # Draw the 9 by 9 Grid
 def draw9x9Grid():
-    # color = "#D0ffff"
-    color = "#48bfe3"
-    color = "#caf0f8"
     color = "white"
     for rowNo in range(1, 10, 3):
         for colNo in range(0, 9, 3):
-            draw3x3Grid(rowNo, colNo, color)
+            draw3x3Grid(rowNo, colNo, color, color)
             # if color == "#D0ffff":
             if color == "#caf0f8":
-
-                color = "#ffffd0"
-                color = "#cdb4db"
                 color = "white"
             else:
-                # color = "#D0ffff"
                 color = "#caf0f8"
     populateGrid(puzzle)
+
 
 # Function to clear values from the grid
 def clearValues():
@@ -134,23 +129,46 @@ def populateGrid(puzzle):
             val = puzzle[rows - 2][col - 1]
             if val != 0:
                 cells[(rows, col)].delete(0, "end")
-                cells[(rows, col)].config(fg="#023e8a")
                 cells[(rows, col)].insert(0, val)
-                # print(val, end="")
+                cells[(rows, col)].config(fg="#023e8a", state="readonly")
 
 
-#
+# Function to play Sudoku's Game theme song
+def play():
+    gameThemeSong = 'playlist/hans1.mp3'
+
+    pygame.init()
+    pygame.mixer.init()
+    pygame.mixer.music.load(gameThemeSong)
+    pygame.mixer.music.play(loops=0)
+
+
+# Function to end the theme music.
+def stop():
+    pygame.mixer.music.stop()
+
+
+# GUI Buttons
+
 # Solution Button
-btn = Button(root, command=compareSolution, text="Submit", width=20)
-btn.grid(row=21, column=1, columnspan=5, pady=20)
-
-# Solve Button
-btn = Button(root, command=checkSolvable, text="Show solution", width=20)
+btn = Button(root, command=compareSolution, text="Submit", width=10)
 btn.grid(row=20, column=1, columnspan=5, pady=20)
 
 # Clear Button
 btn = Button(root, command=clearValues, text="Clear", width=10)
 btn.grid(row=20, column=5, columnspan=5, pady=20)
+
+# Play Music
+btn = Button(root, command=play, text="Play Music", width=10)
+btn.grid(row=21, column=1, columnspan=5, pady=20)
+
+# Stop Music
+btn = Button(root, command=stop, text="Stop Music", width=10)
+btn.grid(row=21, column=5, columnspan=5, pady=20)
+
+# Solve Button
+btn = Button(root, command=checkSolvable, text="Show solution", width=10)
+btn.grid(row=22, column=3, columnspan=5, pady=20)
 
 draw9x9Grid()
 
