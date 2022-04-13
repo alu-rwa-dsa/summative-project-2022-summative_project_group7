@@ -1,9 +1,11 @@
-import tkinter
+import tkinter as tk
 from tkinter import *
 from sudokusolver import solver
 from puzzle import puzzle, solution
 import time
 from tkinter import messagebox
+
+# import mp3play
 import pygame
 
 global board
@@ -150,7 +152,7 @@ def play():
     pygame.mixer.music.play(loops=0)
 
 
-# Function to end the theme music by Hans Zimmer
+# Function to end the theme music.
 def stop():
     pygame.mixer.music.stop()
 
@@ -177,6 +179,108 @@ def changeSubmitButtonText():
         clearBtn['state'] = NORMAL
 
 
+# Start when the time isn't running
+running = False
+
+# time variables initially set to 0
+hours, minutes, seconds = 0, 0, 0
+
+
+def start():
+    global running
+    if not running:
+        update()
+        running = True
+
+
+# pause function
+def pause():
+    global running
+    if running:
+
+        # cancel updating of time using after_cancel()
+        stopwatchLabel.after_cancel(updateTime)
+        running = False
+        changePauseState()
+        for row in range(2, 11):
+            for col in range(1, 10):
+                cells[(row, col)].config(state="readonly")
+
+
+    elif not running:
+        update()
+        running = True
+        changePauseState()
+        for row in range(2, 11):
+            for col in range(1, 10):
+                val = puzzle[row - 2][col - 1]
+                if val != 0:
+                    cells[(row, col)].config(fg="#023e8a", state="readonly")
+
+                else:
+                    cells[(row, col)].config(state="normal")
+
+                # reset function
+
+
+def reset():
+    global running
+    if running:
+        # cancel updating of time using after_cancel()
+        stopwatchLabel.after_cancel(updateTime)
+        running = False
+    # set variables back to zero
+    global hours, minutes, seconds
+    hours, minutes, seconds = 0, 0, 0
+    # set label back to zero
+    stopwatchLabel.config(text='00:00:00')
+
+
+# update stopwatch function
+def update():
+    # update seconds with (addition) compound assignment operator
+
+    global hours, minutes, seconds
+    seconds += 1
+    if seconds == 60:
+        minutes += 1
+        seconds = 0
+    if minutes == 60:
+        hours += 1
+        minutes = 0
+    # format time to include leading zeros
+    hours_string = f'{hours}' if hours > 9 else f'0{hours}'
+    minutes_string = f'{minutes}' if minutes > 9 else f'0{minutes}'
+    seconds_string = f'{seconds}' if seconds > 9 else f'0{seconds}'
+    # update timer label after 1000 ms (1 second)
+    stopwatchLabel.config(text=hours_string + ':' + minutes_string + ':' + seconds_string)
+    # after each second (1000 milliseconds), call update function
+    # use updateTime variable to cancel or pause the time using after_cancel
+    global updateTime
+    updateTime = stopwatchLabel.after(1000, update)
+
+
+def changePauseState():
+    if pauseButton['text'] == 'play':
+        pauseButton['text'] = 'pause'
+    else:
+        pauseButton['text'] = 'play'
+
+
+# label to display time
+stopwatchLabel = tk.Label(text='00:00:00', font=('Arial', 20))
+stopwatchLabel.grid(row=1, column=0, columnspan=5, pady=20)
+
+# start, pause, reset, quit buttons
+# start_button = tk.Button(text='start', height=2, width=7, font=('Arial', 10), command=start)
+# start_button.grid(row=1, column=3, columnspan=5, pady=20)
+pauseButton = tk.Button(text='play', height=1, width=7, font=('Arial', 10), command=pause)
+pauseButton.grid(row=1, column=6, columnspan=2, pady=20)
+resetButton = tk.Button(text='reset', height=1, width=7, font=('Arial', 10), command=reset)
+resetButton.grid(row=1, column=8, columnspan=2, pady=20)
+# quit_button = tk.Button(text='quit', height=2, width=7, font=('Arial', 10), command=root.quit)
+# quit_button.grid(row=1, column=8, columnspan=2, pady=20)
+
 
 # GUI Buttons
 
@@ -201,6 +305,7 @@ solveBtn = Button(root, command=checkSolvable, text="Show solution", width=10, s
 solveBtn.grid(row=22, column=3, columnspan=5, pady=20)
 
 draw9x9Grid()
+
 
 if __name__ == '__main__':
     root.mainloop()
