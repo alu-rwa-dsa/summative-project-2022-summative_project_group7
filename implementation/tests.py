@@ -2,19 +2,10 @@ from sudokusolver import solve_puzzle
 import unittest
 from puzzle import puzzle, solution
 from gui import validateNumber, compareSolution, getValues
-import atexit
 from tkinter import *
-from mock import patch
 
 
 class TestSudoku(unittest.TestCase):
-
-    # def setUp(self):
-    #     self.app = start_application()
-    #     self._start_app()
-    #
-    # def tearDown(self):
-    #     self.app.destroy()
 
     def test_if_solvable(self):
         solvable_sudoku = puzzle
@@ -57,7 +48,7 @@ class TestSudoku(unittest.TestCase):
 if __name__ == "__main__":
     # Set up Tk(), instantiate the application and close it right away.
     root = Tk()
-    atexit.register(root.mainloop())
+    
 
     # Start the actual tests
     unittest.main(verbosity=2)
