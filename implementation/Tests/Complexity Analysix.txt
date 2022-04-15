@@ -1,0 +1,23 @@
+Complexity Analysis
+
+Time Complexity: O(n ^ m) where n is the number of possibilities for each square in our case, it is 9( numbers 1 - 9).
+m is the number of spaces that are blank.
+
+Our time equation for the Backtracking Algorithm is T(m) = 9*T(m-1) + O(1)
+Solving this recurrence will yield, O(9^m) also denoted as O(n^m).
+
+In our puzzle:
+
+  m = 18 empty cells,
+  From the graph, a puzzle with 18 empty cells takes roughly 0.54557100045494735seconds.
+  T(m) = 0.54557100045494735 milliseconds
+
+
+Space Complexity
+
+We need to fill in 81 cells in a 9*9 sudoku and at each level, only one cell is filled.
+
+So, space complexity would be O(m).
+In the graph, the space complexity is nearly constant but increases linearly when the number of empty cells in the
+puzzle increase.
+
