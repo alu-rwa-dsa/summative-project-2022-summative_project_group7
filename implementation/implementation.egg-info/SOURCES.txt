@@ -1,0 +1,15 @@
+LICENSE.txt
+README.md
+setup.py
+implementation/Tests/__init__.py
+implementation/Tests/algorithmtest.py
+implementation/Tests/core.py
+implementation/Tests/listoftestpuzzles.py
+implementation/implementation.egg-info/PKG-INFO
+implementation/implementation.egg-info/SOURCES.txt
+implementation/implementation.egg-info/dependency_links.txt
+implementation/implementation.egg-info/top_level.txt
+implementation/module/__init__.py
+implementation/module/gui.py
+implementation/module/puzzle.py
+implementation/module/sudokusolver.py
