@@ -8,7 +8,7 @@
 **_matplotlib.pyplot:_** a plotting library for creating static, animated, and interactive visualizations for our code. \
 **_Graph:_** Used to visualize analyse the space complexity of the algorithm. \
 **_timeit:_**  is a method in Python library to measure the execution time our code takes. \
-**_unittest:_** library that provides us with a base class, TestCase , which may be used to create new test cases. \
+**_unittest:_** library that provides us with a base class, TestCase , which may be used to create new test cases. 
 
 _**HOW TO SET UP OR INSTALL THE CODE:**_ \
 Clone the project from to your local machine.
@@ -32,7 +32,7 @@ We encourage all players to read this first, as this game could differ slightly 
 
 This game is made of a 9x9 grid with distinct counting numbers ranging from 1 to 9 in each column, row and 3x3 grid.
 Each 3x3 grid is differentiated from its adjacent 3x3 grid by colour. 
-The newly opened sudoku puzzle looks like this: \
+The newly opened sudoku puzzle looks like this: 
 
 ![instructionImages/originalGrid.jpg](instructionImages/originalGrid.jpg)
 
@@ -40,28 +40,28 @@ To start a game, click the **"Play Game"** button. This makes the empty cells in
 Edit the empty cells with the right digits such that the rule of the puzzle is obeyed.
 Rules of the game: No one number should appear more than once in one particular column, row, or 3x3 grid.
 To pause for a different activity, click the **“Pause”** button.
-The pause button replaces the "Play Game" button once game is in progress. \
+The pause button replaces the "Play Game" button once game is in progress. 
 
 ![instructionImages/playGame.jpeg](instructionImages/playGame.jpeg)
 
 
-Once you are done, click **“Submit”** button \
+Once you are done, click **“Submit”** button 
 
 ![instructionImages/submit.jpeg](instructionImages/submit.jpeg)
 
 
-If you want to check the correct answers of the  puzzle click **“Show solution”** button. \
+If you want to check the correct answers of the  puzzle click **“Show solution”** button. 
 
 ![instructionImages/showSolution.jpeg](instructionImages/showSolution.jpeg)
 
 
-If you want to clear your inputs click **“Clear”** button \
+If you want to clear your inputs click **“Clear”** button 
 
 ![instructionImages/clear.jpeg](instructionImages/clear.jpeg)
 
 
 To play or stop playing a song, click on **"play music icon"** button or **"Stop music icon"** respectively.
-These icons alternate between each other once clicked. Check the image below to know the icon to use. \
+These icons alternate between each other once clicked. Check the image below to know the icon to use. 
 
 ![instructionImages/play_StopMusic.jpeg](instructionImages/play_StopMusic.jpeg)
 
@@ -85,7 +85,7 @@ Bearing this in mind, we need to develop cheaper,
 medically proven alternatives that are easily accessible to these individuals to mitigate the effects of dementia
 and improve their overall daily functioning.
 
-_**SOLUTION**_ \
+_**SOLUTION**_ 
 
 Our solution is a user-friendly Graphical sudoku game aimed at enabling players to improve and sharpen their cognitive skills. 
 We do this by incorporating a system that tracks the time a user takes to correctly complete a sudoku puzzle. 
